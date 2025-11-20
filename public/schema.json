@@ -1,0 +1,16 @@
+{
+    "value": {
+        "status": {
+            "additionalStatus": [
+                {
+                    "serverStatusCode": "GENERAL_ERROR",
+                    "severity": "Error",
+                    "statusCode": 100,
+                    "statusDesc": "There was an error"
+                }
+            ],
+            "serverStatusCode": "500",
+            "severity": "Error"
+        }
+    }
+}
