@@ -24,48 +24,44 @@ const AllPosts = () => {
         }
 
         //IPFS + Pinata call
-         const fetchPosts = async () => {
-        //     const { data, contentType } = await pinata.gateways.public.get(
-        //         "bafkreigfcokrttafonuacuucngrzph3arq3ysupj5xp5dokgoac6lkkiia"
-        //     );
-        
-        const urlResponse = await fetch(`${SERVER_URL}/presigned_url`, {
-            method: "GET",
-            headers: {
-              // Handle your own server authorization here
-            }
-          })
-        const data = await urlResponse.json()
+        //  const fetchPosts = async () => {
+        //     const urlResponse = await fetch(`${SERVER_URL}/presigned_url`, {
+        //         method: "GET",
+        //         headers: {
+        //          // Handle your own server authorization here
+        //         }
+        //     })
+        //     const data = await urlResponse.json()
     
-        const files = await pinata.files.public
-            .list()
-            .keyvalues({
-                author_address: dummyAuthorAddress
-              })
-            .url(data.url)
+        //     const files = await pinata.files.public
+        //         .list()
+        //         .keyvalues({
+        //             author_address: dummyAuthorAddress
+        //         })
+        //         .url(data.url)
 
-        console.log(files);
-        }
+        //     console.log(files);
+        // }
+        // fetchPosts();
+
         
-        fetchPosts();
-
-        /*
         // FAST API Call
 
         fetch(`/api/v1/posts`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 setAuthorPosts(data);
+                console.log(authorPosts);
             })
             .catch((err) => console.log(err));
-        */
+        
     }, []);
 
     return (
         <>
             <div className="text-left">
-            <hr/>
-                {authorPosts && authorPosts.map((post)=>(
+            {/* <hr/> */}
+                {/* {authorPosts && authorPosts.map((post)=>(
                         <div key={post.id}>
                         <h2 style={{ fontFamily: 'Palatino, URW Palladio L, serif', fontSize: '26px' }}>
                             {post.title}
@@ -73,10 +69,30 @@ const AllPosts = () => {
                         <p style={{ fontFamily: 'Palatino, URW Palladio L, serif', fontSize: '18px' }}>{post.content}</p>
                         <hr/>
                         </div>
-                ))}
-                {post && <div><p>{post}</p></div>
-                    
-                    }
+                ))} */}
+                    {authorPosts && authorPosts.map((post)=>(
+                    <div key={post.id}>
+                        <div className="text-center">
+                        <h2 style={{ fontFamily: 'Palatino, URW Palladio L, serif', fontSize: '26px' }}>
+                            {post.title}
+                        </h2>
+                        <h4 style={{ fontFamily: 'Palatino, URW Palladio L, serif', fontSize: '20px' }}>
+                            {post.subtitle}
+                        </h4>
+                        
+                        <div style={{ fontFamily: 'Times New Roman', fontSize: '14px' }}>
+                            Rohit Sai Gopal
+                        </div>
+                        <br/>
+                        {/* <img src={post.cover_image_url} alt="cover-image" height="400" width="800"></img> */}
+                        </div>
+                        <br/>
+                        <div className="text-justify">
+                        <p style={{ fontFamily: 'Palatino, URW Palladio L, serif', fontSize: '18px', marginLeft: '200px', marginRight: '200px', lineHeight: '2.0'}}>{post.content}</p>
+                        <hr/>
+                        </div>
+                        </div>
+                    ))}
             </div>
         </>
     );

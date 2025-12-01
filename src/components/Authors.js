@@ -29,6 +29,7 @@ const Authors = () => {
             <table className="table table-striped table-hover">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Name</th>
                         <th>Email</th>
                     </tr>
@@ -36,6 +37,7 @@ const Authors = () => {
                 <tbody>
                     {authors.map((author)=>(
                         <tr key={author.id}>
+                            <td>{author.id}</td>
                             <td>
                                 <Link to={`/authors/${author.id}`}>
                                     {author.name}
