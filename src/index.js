@@ -13,7 +13,6 @@ import Author from './components/Author';
 import AllPosts from './components/AllPosts';
 import EditPost from './components/EditPost';
 import Pinata from './components/Pinata.tsx';
-import Post from './components/Post';
 
 const router = createBrowserRouter([
   {
@@ -37,10 +36,6 @@ const router = createBrowserRouter([
       {
         path:"/post/0", 
         element: <EditPost />,
-      },
-      {
-        path:"/post/:id", 
-        element: <Post />,
       },
       {
         path:"/admin/author/0", 

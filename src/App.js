@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import Alert from './components/common/Alert';
-import logo from './Images/logo.png';
 
 function App() {
   const [jwtToken, setJwtToken] = useState("");
@@ -49,7 +48,6 @@ function App() {
               {/*leaving the graphQL link to a href for reference*/}
             </div>
           </nav>
-          {/* <Link to="/"> <img src={logo} alt="etcher logo" height="200" style={{'padding': '30px', 'display': 'fixed', 'position':'absolute'}}></img></Link> */}
         </div>
         <div className="col-md-10">
           <Alert 
@@ -62,7 +60,6 @@ function App() {
             }} />
         </div>
       </div>
-      
     </div>
   );
 }

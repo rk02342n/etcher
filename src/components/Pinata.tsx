@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
-import { usePinata } from '../hooks/usePinata'
-import { PinataSDK } from 'pinata';
+// import viteLogo from '/vite.svg'
+import { PinataSDK } from 'pinata'
 
+const SERVER_URL = 'http://localhost:8787'
 const GATEWAY_URL = 'fuchsia-improved-albatross-322.mypinata.cloud'
+const dummyAuthorAddress = 'xyzxyzxyzxyz';
 
 const pinata = new PinataSDK({
   pinataJwt: "",
@@ -10,11 +12,9 @@ const pinata = new PinataSDK({
 })
 
 function Pinata() {
-  const [file, setFile] = useState<File | null>(null);
-  const [uploadStatus, setUploadStatus] = useState('');
-  const [link, setLink] = useState('');
-  const { url, fields, loading, error, refresh } = usePinata();
-
+  const [file, setFile] = useState<File | null>(null)
+  const [uploadStatus, setUploadStatus] = useState('')
+  const [link, setLink] = useState('')
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -27,11 +27,19 @@ function Pinata() {
 
     try {
       setUploadStatus('Getting upload URL...')
+      const urlResponse = await fetch(`${SERVER_URL}/presigned_url`, {
+        method: "GET",
+        headers: {
+          // Handle your own server authorization here
+        }
+      })
+      const data = await urlResponse.json()
+
       setUploadStatus('Uploading file...')
 
       const upload = await pinata.upload.public
         .file(file)
-        .url(url)
+        .url(data.url)
 
       if (upload.cid) {
         setUploadStatus('File uploaded successfully!')

@@ -1,48 +1,25 @@
 import { forwardRef } from "react";
 
-const Input = forwardRef(({
-    name,
-    title,
-    type,
-    className,
-    value,
-    onChange,
-    placeholder,
-    autoComplete,
-    // errorDiv,
-    errorMsg,
-    required,
-    onBlur,
-    isblurred,
-}, ref) => {
-
-    const showError = required && (!value || value.trim() === "");
-
-    return (
+const Input = forwardRef((props, ref) => {
+    return(
         <div className="mb-3">
-            <label htmlFor={name} className="form-label">
-                {title || name}
+            <label htmlFor={props.name} className="form-label">
+                {props.name}
             </label>
-
-            <input
-                type={type}
-                className={className}
-                name={name}
-                id={name}
-                ref={ref}
-                placeholder={placeholder}
-                onChange={onChange}
-                autoComplete={autoComplete}
-                value={value}
-                required={required}
-                onBlur={onBlur}
+            <input 
+            type={props.type}
+            className={props.className}
+            name={props.name}
+            ref={ref}
+            id={props.name}
+            placeholder={props.placeholder}
+            onChange={props.onChange}
+            autoComplete={props.autoComplete}
+            value={props.value}
             />
-
-            <div className={showError && isblurred ? "text-danger p-10" : "d-none p-10"}>
-                {errorMsg}
-            </div>
+            <div className={props.errorDiv}>{props.error}</div>
         </div>
-    );
-});
+    )
+})
 
 export default Input;

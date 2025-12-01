@@ -1,40 +1,20 @@
-const TextArea = ({
-    name,
-    title,
-    value,
-    onChange,
-    rows = 4,
-    required,
-    errorMsg,
-    onBlur,
-    isblurred,
-}) => {
-
-    const showError = required && (!value || value.trim() === "");
-
+const TextArea = (props) => {
     return (
         <div className="mb-3">
-            <label htmlFor={name} className="form-label">
-                {title}
+            <label htmlFor={props.name} className="form-label">
+                {props.title}
             </label>
-
             <textarea
                 className="form-control"
-                id={name}
-                name={name}
-                value={value}
-                onChange={onChange}
-                rows={rows}
-                required={required}
-                onBlur={onBlur}
+                id={props.name}
+                name={props.name}
+                value={props.value}
+                onChange={props.onChange}
+                rows={props.rows}
             />
-
-            <div className={showError && isblurred ? "text-danger" : "d-none"}>
-                {errorMsg}
-            </div>
+            <div className={props.errorDiv}>{props.errorMsg}</div>
         </div>
-    );
-};
+    )
+}
 
 export default TextArea;
-
