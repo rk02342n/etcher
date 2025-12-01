@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Author = () => {
     const [author, setAuthor] = useState({});
@@ -40,27 +41,33 @@ const Author = () => {
             .catch((err) => console.log(err));
     }, [id]);
 
-
     //To be diplayed when we click on an individual movie
-    return (
+    return(
         <>
             <div className="text-center">
-                <h2>Author: {author.name}</h2>
-                <small><em>Their email is {author.email}, and they are very talented</em></small>
+                <h2>Posts by {author.name}</h2>
+                <small><em>{author.email}</em></small>
                 <hr />
-            </div>
-            <div className="text-left">
-            <h3>Posts</h3>
-            <hr/>
-                {authorPosts.map((post)=>(
-                        <div key={post.id}>
-                        <h2>
-                            {post.title}
-                        </h2>
-                        <p>{post.content}</p>
-                        <hr/>
-                        </div>
-                ))}
+                <table className="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Subtitle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {authorPosts && authorPosts.map((post)=>(
+                            <tr key={post.id}>
+                                <td>
+                                    <Link to={`/post/${post.id}`}>
+                                        {post.title}
+                                    </Link>
+                                </td>
+                                <td>{post.subtitle}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
         </>
     );
