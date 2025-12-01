@@ -9,6 +9,7 @@ import { useAuthors } from "../hooks/useAuthors";
 
 const SERVER_URL = 'http://localhost:8787'
 const GATEWAY_URL = 'fuchsia-improved-albatross-322.mypinata.cloud'
+const ETCHER_API_URL = process.env.REACT_APP_API_URL
 
 
 const dummyAuthorAddress = 'xyzxyzxyzxyz';
@@ -81,7 +82,7 @@ const EditPost = () => {
             cover_image_url: 'https://picsum.photos/800',
             subtitle: post.subtitle,
           };
-        await axios.post(`/api/v1/posts`, postData)
+        await axios.post(`${ETCHER_API_URL}/api/v1/posts`, postData)
             .then(response => {
                 console.log('Success:', response.data);
             })

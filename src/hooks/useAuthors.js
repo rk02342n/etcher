@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const ETCHER_API_URL = process.env.REACT_APP_API_URL;
+
 export function useAuthors() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,7 +13,7 @@ export function useAuthors() {
     async function fetchPosts() {
       try {
         setLoading(true);
-        const res = await fetch("http://localhost:8000/api/v1/authors");
+        const res = await fetch(`${ETCHER_API_URL}/api/v1/authors`);
         if (!res.ok) throw new Error("Failed to fetch posts");
 
         const json = await res.json();

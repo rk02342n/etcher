@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+const ETCHER_API_URL = process.env.REACT_APP_API_URL;
 
 const Post = () => {
     const [post, setPost] = useState({});
     let { id } = useParams();
+    
 
     useEffect(() => {
         const headers = new Headers();
@@ -14,7 +16,7 @@ const Post = () => {
             headers: headers,
         }
 
-        fetch(`/api/v1/posts/${id}`, requestOptions)
+        fetch(`${ETCHER_API_URL}/api/v1/posts/${id}`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 setPost(data);

@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+const ETCHER_API_URL = process.env.REACT_APP_API_URL;
 
 const Authors = () => {
+     
     const [authors, setAuthors] = useState([]);
 
     useEffect( () => {
@@ -13,7 +15,7 @@ const Authors = () => {
             headers: headers,
         }
 
-        fetch(`http://localhost:8000/api/v1/authors`, requestOptions)
+        fetch(`${ETCHER_API_URL}/api/v1/authors`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 setAuthors(data);

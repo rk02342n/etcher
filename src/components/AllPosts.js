@@ -3,6 +3,7 @@ import { PinataSDK } from 'pinata'
 
 const SERVER_URL = 'http://localhost:8787'
 const GATEWAY_URL = 'fuchsia-improved-albatross-322.mypinata.cloud'
+const ETCHER_API_URL = process.env.REACT_APP_API_URL
 const dummyAuthorAddress = 'xyzxyzxyzxyz';
 
 const pinata = new PinataSDK({
@@ -47,7 +48,7 @@ const AllPosts = () => {
         
         // FAST API Call
 
-        fetch(`/api/v1/posts`, requestOptions)
+        fetch(`${ETCHER_API_URL}/api/v1/posts`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 setAuthorPosts(data);
