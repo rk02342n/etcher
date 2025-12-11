@@ -1,31 +1,32 @@
 import { useEffect, useState } from "react";
-import { useOutletContext } from "react-router";
+import { useOutletContext, useNavigate } from "react-router";
 import TextArea from "./form/TextArea";
 import Input from "./form/Input";
 import axios from "axios";
 import { PinataSDK } from 'pinata'
 import Dropdown from "./common/Dropdown";
 import { useAuthors } from "../hooks/useAuthors";
+import { useMetaMask } from "../hooks/useMetamask";
 
 const SERVER_URL = 'http://localhost:8787'
 const GATEWAY_URL = 'fuchsia-improved-albatross-322.mypinata.cloud'
 const ETCHER_API_URL = process.env.REACT_APP_API_URL
 
-
-const dummyAuthorAddress = 'xyzxyzxyzxyz';
-
+//somehow get the signer wallet address
 const pinata = new PinataSDK({
     pinataJwt: "",
     pinataGateway: GATEWAY_URL
   })
 
 const EditPost = () => {
-    
+    const { address, connect } = useMetaMask();
     const [errors, setErrors] = useState([]);
     const [uploadStatus, setUploadStatus] = useState('');
     const [link, setLink] = useState('');
     const { data: authors, loading, error} = useAuthors();
     const [authorOptions, setAuthorOptions] = useState([]);
+    const [ authorAddress, setAuthorAddress ] = useState(address);
+    const navigate = useNavigate();
 
     const [blurred, setBlurred] = useState({
       title: false,
@@ -47,7 +48,10 @@ const EditPost = () => {
 
     const handleUpload = async (event) => {
       event.preventDefault();
-        if (!post) return
+        if (!post || !address) {
+          console.log('returning early');
+          return;
+        }
         try {
           setUploadStatus('Getting upload URL...')
           const urlResponse = await fetch(`${SERVER_URL}/presigned_url`, {
@@ -89,17 +93,17 @@ const EditPost = () => {
             .catch(error => {
                 console.error('Error:', error);
             });
-        
 
         setPost({
             title: "",
             author_id: "",
             content: "",
         });
+
+        navigate(`/authors/${post.author_id}`);
     }
 
     const handleChange = (event) => {
-      console.log(blurred.content);
         let value = event.target.value;
         let name = event.target.name;
         setPost({
@@ -122,8 +126,8 @@ const EditPost = () => {
         <div className="text-left">
             <h2>Add/Edit Post</h2>
             <hr />
-            <pre>{JSON.stringify(post, null, 3)}</pre>
-            <pre>{JSON.stringify(blurred, null, 3)}</pre>
+            {/* <pre>{JSON.stringify(post, null, 3)}</pre>
+            <pre>{JSON.stringify(blurred, null, 3)}</pre> */}
             {uploadStatus && <p className="uploadStatus">{uploadStatus}</p>}
             {link && <a href={link} target='_blank'>View File</a>}
             {link && <hr/>}
@@ -136,8 +140,6 @@ const EditPost = () => {
                     type={"text"}
                     value={post.title}
                     onChange={handleChange}
-                    errorMsg={"Please enter a title"}
-                    required
                     onBlur={() => setBlurred(prev => ({ ...prev, 'title': true }))}
                     isblurred={blurred.title}
                 />
@@ -150,17 +152,6 @@ const EditPost = () => {
                     value={post.subtitle}
                     onChange={handleChange}
                 />
-
-                {/* <Input
-                    title={"Author ID"}
-                    name={"author_id"}
-                    className={"form-control"}
-                    type={"text"}
-                    value={post.author_id}
-                    onChange={handleChange}
-                    errorDiv={hasError("author_id")? "text-danger" : "d-none"}
-                    errorMsg={"Please enter an author ID"}
-                /> */}
 
                 <Dropdown
                   label="Author"
@@ -177,9 +168,6 @@ const EditPost = () => {
                     value={post.content}
                     rows={"5"}
                     onChange={handleChange}
-                    errorDiv={hasError("content") ? "text-danger" : "d-none"}
-                    errorMsg={"Please enter content"}
-                    required
                     onBlur={() => setBlurred(prev => ({ ...prev, 'content': true }))}
                     isblurred={blurred.content}
                 />

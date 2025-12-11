@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import Alert from './components/common/Alert';
-import logo from './Images/logo.png';
 
 function App() {
   const [jwtToken, setJwtToken] = useState("");
@@ -20,14 +19,14 @@ function App() {
         <div className="col">
           <h1 className="mt-3" style={{ fontFamily: 'Palatino, URW Palladio L, serif', fontSize: '36px' }}>Etcher</h1>
         </div>
-        <div className="col text-end">
+        {/* <div className="col text-end">
           {jwtToken === ""
             ? <Link to="/login">
               <span className="badge bg-success">Login</span>
             </Link>
             : <a href="#!" onClick={logOut}><span className='badge bg-danger'>Logout</span></a>
           }
-        </div>
+        </div> */}
         <hr className="mb-3"></hr>
       </div>
       <div className="row">
@@ -38,7 +37,6 @@ function App() {
               <Link to="/allposts" className="list-group-item list-group-item-action">Explore</Link>
               <Link to="/authors" className="list-group-item list-group-item-action">Authors</Link>
               <Link to="/post/0" className="list-group-item list-group-item-action">Add Post</Link>
-              <Link to="/pinata" className="list-group-item list-group-item-action">Pinata</Link>
               {jwtToken !== "" &&
                 <>
                   <Link to="admin/author/0" className="list-group-item list-group-item-action">Add Author</Link>
