@@ -12,20 +12,17 @@ const SERVER_URL = 'http://localhost:8787'
 const GATEWAY_URL = 'fuchsia-improved-albatross-322.mypinata.cloud'
 const ETCHER_API_URL = process.env.REACT_APP_API_URL
 
-//somehow get the signer wallet address
 const pinata = new PinataSDK({
     pinataJwt: "",
     pinataGateway: GATEWAY_URL
   })
 
 const EditPost = () => {
-    const { address, connect } = useMetaMask();
     const [errors, setErrors] = useState([]);
     const [uploadStatus, setUploadStatus] = useState('');
     const [link, setLink] = useState('');
     const { data: authors, loading, error} = useAuthors();
     const [authorOptions, setAuthorOptions] = useState([]);
-    const [ authorAddress, setAuthorAddress ] = useState(address);
     const navigate = useNavigate();
 
     const [blurred, setBlurred] = useState({
@@ -48,8 +45,7 @@ const EditPost = () => {
 
     const handleUpload = async (event) => {
       event.preventDefault();
-        if (!post || !address) {
-          console.log('returning early');
+        if (!post) {
           return;
         }
         try {
